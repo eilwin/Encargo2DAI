@@ -20,10 +20,7 @@
         <title>Agregar Libro</title>
     </head>
     <body>
-        <?php
-        include 'navbar.html';
-        ?>
-        
+        <?php include 'navbar.html'; ?>
         <div class="container">
             
         </div>
