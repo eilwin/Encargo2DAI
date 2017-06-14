@@ -29,6 +29,35 @@
             <div class="row">
                 <h1>Listado de Libros (<?= count($datos)?>)</h1>
             </div>
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>N</th>
+                        <th>Titulo</th>
+                        <th>Autor</th>
+                        <th>Editorial</th>
+                        <th>Idioma</th>
+                        <th>Copias</th>
+                    </tr>
+                    <?php $cont=1; foreach ($datos as $libro): ?>
+                    <tr>
+                        <td><?=$cont++?></td>
+                        <td><?=$libro["titulo"]?></td>
+                        <td><?=$libro["autor"]?></td>
+                        <td><?=$libro["editorial"]?></td>
+                        <td><?=$libro["idioma"]?></td>
+                        <td><?=$libro["copias"]?></td>
+                        <td><button type="submit" class="btn btn-default" aria-label="Editar">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>
+                            <button type="submit" class="btn btn-default" aria-label="Borrar">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
