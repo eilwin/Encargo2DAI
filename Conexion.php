@@ -4,7 +4,7 @@ class Conexion {
 
    private $_user = "root";
    private $_pass = "";
-   private $_nombreBase = "libros";
+   private $_nombreBase = "entrega2";
    private $_direccion = "localhost";
    private $_conex;
 
