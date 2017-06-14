@@ -29,6 +29,7 @@
             <div class="row">
                 <h1>Listado de Libros (<?= count($datos)?>)</h1>
             </div>
+            <?php if(count($datos)>0): ?>
             <div class="row">
                 <table class="table">
                     <tr>
@@ -58,6 +59,11 @@
                     <?php endforeach; ?>
                 </table>
             </div>
+            <?php else: ?>
+            <div class="row">
+                <h2>Ups, nada que mostrar por aca</h2>
+            </div>
+            <?php endif; ?>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
