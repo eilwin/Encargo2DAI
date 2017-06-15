@@ -4,7 +4,20 @@
     $sql = "SELECT * FROM libros";
     if(isset($_POST["btn-buscar"])){
         $dato = $_POST["datoLibro"];
-        $sql = "SELECT titulo, autor, editorial, idioma FROM libros";
+        $criterio = $_POST["criterio"];
+        if(empty($dato)){
+            header('location:buscar_libro.php');
+            exit;
+        }
+        if($criterio == "titulo"){
+            $sql = "SELECT titulo, autor, editorial, idioma FROM libros WHERE titulo LIKE '%$dato%'";
+        }
+        elseif ($criterio == "autor") {
+            $sql = "SELECT titulo, autor, editorial, idioma FROM libros WHERE autor LIKE '%$dato%'";
+        }
+        elseif ($criterio == "editorial") {
+            $sql = "SELECT titulo, autor, editorial, idioma FROM libros WHERE editorial LIKE '%$dato%'";
+        }
     }
     $datos = $conex->query($sql);
 ?>
@@ -36,10 +49,10 @@
             <div class="row">
                 <form method="post" action="buscar_libro.php">
                     <div class="col-xs-12 col-sm-3">
-                        <select class="form-control">
-                                <option>Titulo</option>
-                                <option>Autor</option>
-                                <option>Editorial</option>
+                        <select name="criterio" class="form-control">
+                            <option value="titulo">Titulo</option>
+                            <option value="autor">Autor</option>
+                            <option value="editorial">Editorial</option>
                         </select>
                     </div>
                     <div class="col-xs-12 col-sm-9">
@@ -57,7 +70,22 @@
                 <h3>Resultados (<?= count($datos)?>)</h3>
                 <?php if(count($datos)>0): ?>
                 <div>
-                    
+                    <table class="table">
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Autor</th>
+                            <th>Editorial</th>
+                            <th>Idioma</th>
+                        </tr>
+                        <?php foreach($datos as $libro): ?>
+                        <tr>
+                            <td><?=$libro["titulo"]?></td>
+                            <td><?=$libro["autor"]?></td>
+                            <td><?=$libro["editorial"]?></td>
+                            <td><?=$libro["idioma"]?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
                 </div>
                 <?php else: ?>
                 <div>
