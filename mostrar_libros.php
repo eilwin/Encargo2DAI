@@ -22,6 +22,12 @@
         <style>
             body{ padding-top: 70px; }
         </style>
+        <script>
+            function borrarLibro(){
+                var idBorrado = document.getElementById('idSend').value;
+                window.location = "borrar_libro.php?id="+idBorrado;
+            }
+        </script>
     </head>
     <body>
         <?php include 'navbar.html'; ?>
@@ -51,7 +57,7 @@
                         <td><button type="submit" class="btn btn-default" aria-label="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
-                            <button type="submit" class="btn btn-default" aria-label="Borrar">
+                            <button type="button" class="btn btn-default" aria-label="Borrar" data-toggle="modal" data-target="#mdlBorrar" onclick="document.getElementById('idSend').value=<?=$libro['id']?>;document.getElementById('liTitulo').innerHTML='<?=$libro["titulo"]?>';document.getElementById('liAutor').innerHTML='<?=$libro["autor"]?>';document.getElementById('liEditorial').innerHTML='<?=$libro["editorial"]?>';">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
                         </td>
@@ -61,9 +67,33 @@
             </div>
             <?php else: ?>
             <div class="row">
-                <h2>Ups, nada que mostrar por aca</h2>
+                <h3>Ups, nada que mostrar por aca</h3>
             </div>
             <?php endif; ?>
+        </div>
+        <!-- MODAL -->
+        <div class="modal fade" id="mdlBorrar" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        <h4 class="modal-title">Confirmacion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="idSend">
+                        <p>Esta seguro que desea eliminar este libro?</p>
+                        <ul>
+                            <li><p id="liTitulo">a</p></li>
+                            <li><p id="liAutor">b</p></li>
+                            <li><p id="liEditorial">c</p></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="borrarLibro()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
