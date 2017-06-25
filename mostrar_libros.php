@@ -54,9 +54,10 @@
                         <td><?=$libro["editorial"]?></td>
                         <td><?=$libro["idioma"]?></td>
                         <td><?=$libro["copias"]?></td>
-                        <td><button type="submit" class="btn btn-default" aria-label="Editar">
+                        <td><a href="editar_libro.php?cod=stock&id=<?=$libro['id']?>" class="btn btn-default">Stock</a>
+                            <a href="editar_libro.php?cod=edit&id=<?=$libro['id']?>" class="btn btn-default" aria-label="Editar">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-default" aria-label="Borrar" data-toggle="modal" data-target="#mdlBorrar" onclick="document.getElementById('idSend').value=<?=$libro['id']?>;document.getElementById('liTitulo').innerHTML='<?=$libro["titulo"]?>';document.getElementById('liAutor').innerHTML='<?=$libro["autor"]?>';document.getElementById('liEditorial').innerHTML='<?=$libro["editorial"]?>';">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
@@ -71,7 +72,7 @@
             </div>
             <?php endif; ?>
         </div>
-        <!-- MODAL -->
+        <!-- MODALS -->
         <div class="modal fade" id="mdlBorrar" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
