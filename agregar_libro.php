@@ -1,5 +1,42 @@
 <?php
-    
+    include 'Conexion.php';
+    $conex = new Conexion();
+    $errores = array();
+    $titulo = "";
+    $autor = "";
+    $editorial = "";
+    if(isset($_POST["btn-agregar"])){
+        $titulo = strtoupper($_POST["titulo"]);
+        $autor = strtoupper($_POST["autor"]);
+        $editorial = strtoupper($_POST["editorial"]);
+        $idioma = $_POST["idioma"];
+        $copias = $_POST["copias"];
+        
+        if(empty($titulo)){
+            array_push($errores,"Debe ingresar un Titulo");
+        }
+        else{
+            $sql = "SELECT * FROM libros WHERE titulo='$titulo'";
+            $coincidencias = $conex->query($sql);
+            if(count($coincidencias) > 0){
+                array_push($errores, "Titulo ya esta registrado");
+            }
+        }
+        if(empty($autor)){
+            array_push($errores,"Debe ingresar nombre de Autor");
+        }
+        if(empty($editorial)){
+            array_push($errores,"Debe ingresar nombre de Editorial");
+        }
+        
+        if(count($errores)==0){
+            $sql = "INSERT INTO libros(titulo,autor,editorial,idioma,copias) VALUES ('$titulo','$autor','$editorial','$idioma','$copias')";
+            $conex->execute($sql);
+            //echo "";
+            header("location:mostrar_libros.php");
+            exit;
+        }
+    }
 ?>
 <html>
     <head>
@@ -25,7 +62,54 @@
     <body>
         <?php include 'navbar.html'; ?>
         <div class="container">
-            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <h1 class="h1">Agregar Libro</h1>
+                    </div>
+                    <?php if(count($errores)>0): ?>
+                    <div class="text-danger">
+                        Por favor solucione los siguientes problemas:
+                        <ul>
+                            <?php foreach($errores as $error): ?>
+                            <li><?=$error?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
+                    <form method="post" action="agregar_libro.php">
+                        <div class="form-group">
+                            <label for="titulo">Titulo</label>
+                            <input name="titulo" class="form-control" type="text" value="<?=$titulo?>" />
+                        </div>
+                        <div class="form-group">
+                            <label for="autor">Autor</label>
+                            <input name="autor" class="form-control" type="text" value="<?=$autor?>" />
+                        </div>
+                        <div class="form-group">
+                            <label for="editorial">Editorial</label>
+                            <input name="editorial" class="form-control" type="text" value="<?=$editorial?>" />
+                        </div>
+                        <div class="form-group">
+                            <label for="idioma">Idioma</label>
+                            <select name="idioma" class="form-control">
+                                <option value="Español">Español</option>
+                                <option value="Ingles">Ingles</option>
+                                <option value="Frances">Frances</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="copias">Copias</label>
+                            <input name="copias" class="form-control" type="number" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <button name="btn-agregar" class="btn btn-primary" type="submit">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
