@@ -2,6 +2,7 @@
     include 'Conexion.php';
     $conex = new Conexion();
     $errores = array();
+    $idioma_o = "";
     if(isset($_GET["cod"]) && isset($_GET["id"])){
         $id = $_GET["id"];
         $sql = "SELECT id, titulo, autor, editorial, idioma, copias FROM libros WHERE id='$id'";
@@ -13,24 +14,21 @@
         $editorial = $libro["editorial"];
         $idioma = $libro["idioma"];
         $copias = $libro["copias"];
+        $idioma_o = $idioma;
     }
     
-    if(isset($_POST["btn-agregar"])){
+    if(isset($_POST["btn-guardar"])){
+        $id = $_POST["id"];
+        $cod = $_POST["cod"];
         $titulo = strtoupper($_POST["titulo"]);
         $autor = strtoupper($_POST["autor"]);
         $editorial = strtoupper($_POST["editorial"]);
-        $idioma = $_POST["idioma"];
+        if($cod == "stock"){ $idioma = $_POST["idioma_o"]; }
+        else{ $idioma = $_POST["idioma"]; }
         $copias = $_POST["copias"];
         
         if(empty($titulo)){
             array_push($errores,"Debe ingresar un Titulo");
-        }
-        else{
-            $sql = "SELECT * FROM libros WHERE titulo='$titulo'";
-            $coincidencias = $conex->query($sql);
-            if(count($coincidencias) > 0){
-                array_push($errores, "Titulo ya esta registrado");
-            }
         }
         if(empty($autor)){
             array_push($errores,"Debe ingresar nombre de Autor");
@@ -88,6 +86,8 @@
                     <?php endif; ?>
                     <form method="post" action="editar_libro.php">
                         <input type="hidden" name="id" value="<?=$id?>">
+                        <input type="hidden" name="cod" value="<?=$cod?>">
+                        <input type="hidden" name="idioma_o" value="<?=$idioma_o?>">
                         <div class="form-group">
                             <label for="titulo">Titulo</label>
                             <input name="titulo" class="form-control" type="text" value="<?=$titulo?>" <?=($cod=="stock"?"readonly":"")?> />
@@ -110,7 +110,7 @@
                         </div>
                         <div class="form-group">
                             <label for="copias">Copias</label>
-                            <input name="copias" class="form-control" type="number" value="0" min="0" />
+                            <input name="copias" class="form-control" type="number" value="<?=$copias?>" min="0" />
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-info" onclick="window.location='mostrar_libros.php'">Cancelar</button>
