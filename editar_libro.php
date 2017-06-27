@@ -109,8 +109,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="copias">Copias</label>
-                            <input name="copias" class="form-control" type="number" value="<?=$copias?>" min="0" />
+                            <label <?=($cod=="stock")?"":"hidden"?> for="copias">Copias</label>
+                            <input name="copias" class="form-control" type="<?=($cod=='stock')?'number':'hidden'?>" value="<?=$copias?>" min="0" />
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-info" onclick="window.location='mostrar_libros.php'">Cancelar</button>
