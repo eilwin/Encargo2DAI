@@ -1,4 +1,10 @@
 <?php
+    if(!isset($_POST["btn-guardar"])){
+        if(!isset($_GET["id"]) || !is_numeric($_GET["id"]) || $_GET["id"]<1){
+            header("location:mostrar_libros.php");
+            exit;
+        }
+    }
     include 'Conexion.php';
     $conex = new Conexion();
     $errores = array();
