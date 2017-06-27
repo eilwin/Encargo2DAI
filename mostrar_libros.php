@@ -46,8 +46,8 @@
                         <th>Idioma</th>
                         <th>Copias</th>
                     </tr>
-                    <?php $cont=1; foreach ($datos as $libro): ?>
-                    <tr>
+                    <?php $suma = 0; $cont=1; foreach ($datos as $libro): ?>
+                    <tr <?=($libro["copias"]<3?"style='color:red'":"")?>>
                         <td><?=$cont++?></td>
                         <td><?=$libro["titulo"]?></td>
                         <td><?=$libro["autor"]?></td>
@@ -63,8 +63,9 @@
                             </button>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
+                    <?php $suma += $libro["copias"]; endforeach; ?>
                 </table>
+                <h4>Total: <?=$suma?> libros</h4>
             </div>
             <?php else: ?>
             <div class="row">
